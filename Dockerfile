@@ -21,7 +21,8 @@ RUN npm install --no-audit --no-fund
 # Copy all source files needed for build
 COPY . .
 
-# Build frontend assets
+# Build frontend assets (force JS fallback for rolldown native bindings)
+ENV ROLLDOWN_FORCE_JS=1
 RUN npm run build
 
 # Stage 2: Production image
