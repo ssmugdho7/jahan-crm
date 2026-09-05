@@ -1,15 +1,27 @@
 # Multi-stage build for Laravel + React
 # Stage 1: Build frontend assets
-FROM node:20-alpine AS frontend-builder
+FROM node:20-slim AS frontend-builder
 
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm ci --no-audit --no-fund
+# Install git and other dependencies needed by npm packages
+RUN apt-get update && apt-get install -y \
+    git \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY vite.config.ts tsconfig.json ./
-COPY resources/js ./resources/js
-COPY resources/css ./resources/css
+# Copy package files first for better caching
+COPY package.json package-lock.json* ./
+
+# Install npm dependencies with all optional packages
+RUN npm install --no-audit --no-fund
+
+# Copy all source files needed for build
+COPY . .
+
+# Build frontend assets
 RUN npm run build
 
 # Stage 2: Production image
@@ -33,9 +45,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Redis extension
-RUN pecl install redis && docker-php-ext-enable redis
-
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -50,15 +59,12 @@ COPY --from=frontend-builder /app/public/build ./public/build
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Generate application key if not set
-RUN php artisan key:generate --no-interaction || true
-
-# Create storage directories
+# Create storage directories with proper permissions
 RUN mkdir -p storage/framework/{cache,sessions,views} \
     storage/logs \
     storage/app/public \
     bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache \
     || true
 
 # Expose port
