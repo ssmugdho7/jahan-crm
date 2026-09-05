@@ -64,5 +64,5 @@ RUN mkdir -p storage/framework/{cache,sessions,views} \
 # Expose port
 EXPOSE 8000
 
-# Start command
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# Start command - run migrations then serve
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
