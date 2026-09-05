@@ -1,0 +1,460 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-sans:
+        'Inter', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+    --background: oklch(0.985 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(0.985 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(0.985 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.72 0.19 175);
+    --primary-foreground: oklch(0.15 0.02 175);
+    --secondary: oklch(0.96 0.01 260);
+    --secondary-foreground: oklch(0.145 0 0);
+    --muted: oklch(0.96 0.01 260);
+    --muted-foreground: oklch(0.5 0.02 260);
+    --accent: oklch(0.94 0.02 260);
+    --accent-foreground: oklch(0.145 0 0);
+    --destructive: oklch(0.65 0.2 25);
+    --destructive-foreground: oklch(0.985 0 0);
+    --border: oklch(0.9 0.01 260);
+    --input: oklch(0.96 0.01 260);
+    --ring: oklch(0.72 0.19 175);
+    --chart-1: oklch(0.72 0.19 175);
+    --chart-2: oklch(0.65 0.2 25);
+    --chart-3: oklch(0.6 0.15 200);
+    --chart-4: oklch(0.7 0.18 150);
+    --chart-5: oklch(0.65 0.15 280);
+    --radius: 0.5rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.72 0.19 175);
+    --sidebar-primary-foreground: oklch(0.15 0.02 175);
+    --sidebar-accent: oklch(0.94 0.02 175);
+    --sidebar-accent-foreground: oklch(0.145 0 0);
+    --sidebar-border: oklch(0.9 0.01 260);
+    --sidebar-ring: oklch(0.72 0.19 175);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.2 0.01 260);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.22 0.02 260);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.72 0.19 175);
+    --primary-foreground: oklch(0.15 0.02 175);
+    --secondary: oklch(0.28 0.04 260);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.25 0.02 260);
+    --muted-foreground: oklch(0.7 0.02 260);
+    --accent: oklch(0.3 0.06 260);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.65 0.2 25);
+    --destructive-foreground: oklch(0.985 0 0);
+    --border: oklch(0.3 0.02 260);
+    --input: oklch(0.25 0.02 260);
+    --ring: oklch(0.72 0.19 175);
+    --chart-1: oklch(0.72 0.19 175);
+    --chart-2: oklch(0.65 0.2 25);
+    --chart-3: oklch(0.6 0.15 200);
+    --chart-4: oklch(0.7 0.18 150);
+    --chart-5: oklch(0.65 0.15 280);
+    --sidebar: oklch(0.16 0.02 260);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.72 0.19 175);
+    --sidebar-primary-foreground: oklch(0.15 0.02 175);
+    --sidebar-accent: oklch(0.25 0.04 175);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(0.25 0.02 260);
+    --sidebar-ring: oklch(0.72 0.19 175);
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Override hardcoded dark colors in light mode */
+html:not(.dark) body,
+html:not(.dark) .bg-slate-900,
+html:not(.dark) .bg-slate-950,
+html:not(.dark) .bg-slate-800 {
+    background-color: #ffffff !important;
+}
+
+html:not(.dark) .bg-gradient-to-br {
+    background: linear-gradient(to bottom right, #f8fafc, #f1f5f9, #f8fafc) !important;
+}
+
+html:not(.dark) .text-white,
+html:not(.dark) .text-slate-100,
+html:not(.dark) .text-slate-200,
+html:not(.dark) .text-slate-300,
+html:not(.dark) .text-slate-400 {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .border-slate-800,
+html:not(.dark) .border-slate-700 {
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) input,
+html:not(.dark) textarea,
+html:not(.dark) select {
+    background-color: #f8fafc !important;
+    color: #1e293b !important;
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .hover\:bg-slate-800\/40:hover,
+html:not(.dark) .hover\:bg-slate-700:hover {
+    background-color: #f1f5f9 !important;
+}
+
+/* Custom Theme Support */
+html.theme-custom body,
+html.theme-custom .bg-slate-900,
+html.theme-custom .bg-slate-950,
+html.theme-custom .bg-slate-800 {
+    background-color: var(--custom-bg) !important;
+}
+
+html.theme-custom .bg-gradient-to-br {
+    background: linear-gradient(to bottom right, var(--custom-bg), var(--custom-surface), var(--custom-bg)) !important;
+}
+
+html.theme-custom .text-white,
+html.theme-custom .text-slate-100,
+html.theme-custom .text-slate-200,
+html.theme-custom .text-slate-300,
+html.theme-custom .text-slate-400 {
+    color: var(--custom-text) !important;
+}
+
+html.theme-custom .border-slate-800,
+html.theme-custom .border-slate-700 {
+    border-color: var(--custom-surface) !important;
+}
+
+html.theme-custom input,
+html.theme-custom textarea,
+html.theme-custom select {
+    background-color: var(--custom-surface) !important;
+    color: var(--custom-text) !important;
+    border-color: var(--custom-surface) !important;
+}
+
+html.theme-custom .text-teal-400,
+html.theme-custom .text-teal-500,
+html.theme-custom .text-cyan-400,
+html.theme-custom .text-cyan-500 {
+    color: var(--custom-primary) !important;
+}
+
+html.theme-custom .bg-teal-500\/10,
+html.theme-custom .bg-cyan-500\/10 {
+    background-color: color-mix(in srgb, var(--custom-primary) 10%, transparent) !important;
+}
+
+html.theme-custom .from-teal-500,
+html.theme-custom .from-cyan-600 {
+    --tw-gradient-from: var(--custom-primary) !important;
+}
+
+html.theme-custom .to-cyan-600,
+html.theme-custom .to-teal-500 {
+    --tw-gradient-to: var(--custom-secondary) !important;
+}
+
+html.theme-custom .hover\:bg-slate-800\/40:hover,
+html.theme-custom .hover\:bg-slate-700:hover {
+    background-color: var(--custom-surface) !important;
+}
+
+html.theme-custom .ring-teal-500,
+html.theme-custom .ring-cyan-500 {
+    --tw-ring-color: var(--custom-primary) !important;
+}
+
+@layer utilities {
+    .bg-card {
+        background-color: var(--card);
+    }
+
+    .text-card-foreground {
+        color: var(--card-foreground);
+    }
+
+    .text-foreground {
+        color: var(--foreground);
+    }
+
+    .border-border {
+        border-color: var(--border);
+    }
+
+    input,
+    select,
+    textarea {
+        background-color: var(--input);
+        color: var(--foreground);
+        border-color: var(--border);
+    }
+
+    button,
+    [role='button'] {
+        color: inherit;
+    }
+}
+
+/* ============================================
+   LIQUID GLASS EFFECT (Apple-inspired)
+   ============================================ */
+
+.liquid-glass-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 9999px;
+}
+
+/* Active state - persistent subtle glass */
+.liquid-glass-active {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 100%
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Hover state - full liquid glass bubble */
+.liquid-glass-hover {
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    background: radial-gradient(
+        ellipse at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 0 24px rgba(59, 130, 246, 0.12),
+        0 0 48px rgba(59, 130, 246, 0.04),
+        inset 0 1px 2px rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Specular highlight that follows mouse */
+.liquid-glass-highlight {
+    position: absolute;
+    width: 140px;
+    height: 70px;
+    border-radius: 9999px;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.15) 35%,
+        transparent 70%
+    );
+    filter: blur(10px);
+    transform: translate(
+        calc(var(--mouse-x, 50%) - 50%),
+        calc(var(--mouse-y, 50%) - 50%)
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Animated glossy reflection */
+.liquid-glass-reflection {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.08) 45%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 55%,
+        transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: liquid-reflection 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.liquid-glass-container:hover .liquid-glass-reflection {
+    opacity: 1;
+}
+
+@keyframes liquid-reflection {
+    0%, 100% { background-position: 200% center; }
+    50% { background-position: -200% center; }
+}
+
+/* Content sits above glass effects */
+.liquid-glass-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Hover scale and translate on content */
+.liquid-glass-container:hover .liquid-glass-content {
+    transform: translateY(-2px) scale(1.05);
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Brighter text on hover */
+.liquid-glass-container:hover .liquid-glass-content > * {
+    filter: brightness(1.2);
+    transition: filter 300ms ease;
+}
+
+/* Icon enhancement on hover */
+.liquid-glass-container:hover .liquid-glass-content svg {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+    transition:
+        transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 300ms ease;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .liquid-glass-reflection {
+        animation: none;
+    }
+
+    .liquid-glass-container:hover .liquid-glass-content {
+        transform: none;
+    }
+
+    .liquid-glass-container:hover .liquid-glass-content svg {
+        transform: none;
+    }
+}
+
+/* Light mode adjustments */
+html:not(.dark) .liquid-glass-active {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.04) 0%,
+        rgba(0, 0, 0, 0.02) 100%
+    );
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+html:not(.dark) .liquid-glass-hover {
+    background: radial-gradient(
+        ellipse at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.75) 0%,
+        rgba(255, 255, 255, 0.45) 25%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 100%
+    );
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.08),
+        0 2px 6px rgba(0, 0, 0, 0.04),
+        inset 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+html:not(.dark) .liquid-glass-highlight {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.4) 35%,
+        transparent 70%
+    );
+}
