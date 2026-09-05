@@ -2,22 +2,15 @@ databases:
   - name: jahan-crm-db
     plan: free
     databaseName: jahan-crm
+    ipAllowList: []
 
 services:
   - type: web
     name: jahan-crm
-    runtime: php
+    runtime: docker
     plan: free
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      npm install
-      npm run build
-      php artisan storage:link || true
-      php artisan migrate --force
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
-    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    dockerfilePath: ./Dockerfile
+    preDeployCommand: php artisan migrate --force
     healthCheckPath: /
     envVars:
       - key: APP_ENV
@@ -27,11 +20,29 @@ services:
       - key: APP_KEY
         generateValue: true
       - key: APP_URL
-        fromService:
-          name: jahan-crm
-          property: url
+        value: https://jahan-crm.onrender.com
       - key: DB_CONNECTION
-        value: sqlite
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: jahan-crm-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: jahan-crm-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: jahan-crm-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: jahan-crm-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: jahan-crm-db
+          property: password
       - key: SESSION_DRIVER
         value: database
       - key: CACHE_STORE
@@ -42,3 +53,13 @@ services:
         value: stack
       - key: LOG_LEVEL
         value: error
+      - key: SESSION_ENCRYPT
+        value: "false"
+      - key: SESSION_PATH
+        value: "/"
+      - key: SESSION_DOMAIN
+        value: "null"
+      - key: BROADCAST_CONNECTION
+        value: log
+      - key: FILESYSTEM_DISK
+        value: local
