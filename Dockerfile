@@ -1,34 +1,18 @@
 # Multi-stage build for Laravel + React
-# Stage 1: Build frontend assets
-FROM node:20-slim AS frontend-builder
+# Stage 1: Build frontend assets (full node image needed for rolldown native binaries)
+FROM node:20 AS frontend-builder
 
 WORKDIR /app
 
-# Install git and other dependencies needed by npm packages
-RUN apt-get update && apt-get install -y \
-    git \
-    python3 \
-    make \
-    g++ \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy package files first for better caching
 COPY package.json package-lock.json* ./
-
-# Install npm dependencies with all optional packages
 RUN npm install --no-audit --no-fund
 
-# Copy all source files needed for build
 COPY . .
-
-# Build frontend assets (force JS fallback for rolldown native bindings)
-ENV ROLLDOWN_FORCE_JS=1
 RUN npm run build
 
 # Stage 2: Production image
 FROM php:8.3-cli AS production
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -46,21 +30,15 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-# Copy application files
 COPY . .
-
-# Copy built frontend assets from stage 1
 COPY --from=frontend-builder /app/public/build ./public/build
 
-# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Create storage directories with proper permissions
 RUN mkdir -p storage/framework/{cache,sessions,views} \
     storage/logs \
     storage/app/public \
@@ -68,8 +46,6 @@ RUN mkdir -p storage/framework/{cache,sessions,views} \
     && chmod -R 775 storage bootstrap/cache \
     || true
 
-# Expose port
 EXPOSE 8000
 
-# Start command - run migrations then serve
 CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
